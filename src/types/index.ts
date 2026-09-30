@@ -1,5 +1,10 @@
 export type TransactionType = 'Income' | 'Expense'
 
+export interface TransactionAttachment {
+  name: string
+  dataUrl: string
+}
+
 export interface Transaction {
   id: string
   amount: number
@@ -7,6 +12,8 @@ export interface Transaction {
   category: string
   date: string
   description: string
+  notes?: string
+  attachment?: TransactionAttachment
   createdAt: string
 }
 
@@ -16,6 +23,8 @@ export interface TransactionInput {
   category: string
   date: string
   description: string
+  notes?: string
+  attachment?: TransactionAttachment
 }
 
 export interface Category {
@@ -26,4 +35,19 @@ export interface Category {
 
 export interface CategoryInput {
   name: string
+}
+
+export interface SavingsGoal {
+  id: string
+  name: string
+  targetAmount: number
+  currentAmount: number
+  targetDate: string
+  createdAt: string
+}
+
+export interface SavingsGoalInput {
+  name: string
+  targetAmount: number
+  targetDate: string
 }

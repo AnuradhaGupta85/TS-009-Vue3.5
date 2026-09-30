@@ -49,6 +49,27 @@ export const useTransactionStore = defineStore('transactions', () => {
     save(current.filter((record) => record.id !== id))
     return true
   }
+  // MOCK: bulk-deletes locally persisted transactions in place of an API bulk-delete response.
+  function localBulkDelete(ids: string[]): number {
+    const idSet = new Set(ids)
+    const current = load()
+    const remaining = current.filter((record) => !idSet.has(record.id))
+    save(remaining)
+    return current.length - remaining.length
+  }
+  // MOCK: bulk-updates the category of locally persisted transactions in place of an API bulk-update response.
+  function localBulkUpdateCategory(ids: string[], category: string): number {
+    const idSet = new Set(ids)
+    const current = load()
+    let count = 0
+    const updated = current.map((record) => {
+      if (!idSet.has(record.id)) return record
+      count += 1
+      return { ...record, category }
+    })
+    save(updated)
+    return count
+  }
 
   async function getAll(): Promise<Transaction[]> {
     if (USE_MOCK) return localGetAll()
@@ -71,6 +92,16 @@ export const useTransactionStore = defineStore('transactions', () => {
     await api.delete<void>(`/api/v1/transactions/${id}`)
     return true
   }
+  async function bulkRemove(ids: string[]): Promise<number> {
+    if (USE_MOCK) return localBulkDelete(ids)
+    await api.post<void>('/api/v1/transactions/bulk-delete', { ids })
+    return ids.length
+  }
+  async function bulkUpdateCategory(ids: string[], category: string): Promise<number> {
+    if (USE_MOCK) return localBulkUpdateCategory(ids, category)
+    await api.post<void>('/api/v1/transactions/bulk-categorize', { ids, category })
+    return ids.length
+  }
 
-  return { transactions, getAll, getById, create, update, remove }
+  return { transactions, getAll, getById, create, update, remove, bulkRemove, bulkUpdateCategory }
 })

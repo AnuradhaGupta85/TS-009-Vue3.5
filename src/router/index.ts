@@ -15,6 +15,7 @@ const router = createRouter({
         { path: 'transactions/:id/edit', name: 'transaction-edit', component: () => import('../views/TransactionFormView.vue') },
         { path: 'categories', name: 'categories', component: () => import('../views/CategoriesView.vue') },
         { path: 'monthly-summary', name: 'monthly-summary', component: () => import('../views/MonthlySummaryView.vue') },
+        { path: 'savings-goals', name: 'savings-goals', component: () => import('../views/SavingsGoalsView.vue') },
       ],
     },
     { path: '/:pathMatch(.*)*', name: 'not-found', component: () => import('../views/NotFoundView.vue') },

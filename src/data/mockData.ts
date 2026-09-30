@@ -1,7 +1,7 @@
 // MOCK DATA — placeholder records for local development only.
 // Replace with real API data before production use.
 
-import type { Category, Transaction } from '../types'
+import type { Category, SavingsGoal, Transaction } from '../types'
 
 export const mockCategories: Category[] = [
   { id: 'cat-food', name: 'Food', type: 'predefined' },
@@ -25,4 +25,10 @@ export const mockTransactions: Transaction[] = [
   { id: 'txn-8', amount: 18.75, type: 'Expense', category: 'Food', date: '2025-02-19', description: 'Lunch with team', createdAt: '2025-02-19T13:00:00.000Z' },
   { id: 'txn-9', amount: 500, type: 'Income', category: 'Savings', date: '2025-02-15', description: 'Interest payment', createdAt: '2025-02-15T09:00:00.000Z' },
   { id: 'txn-10', amount: 55, type: 'Expense', category: 'Health', date: '2025-02-10', description: 'Pharmacy', createdAt: '2025-02-10T16:00:00.000Z' },
+]
+
+// MOCK: starter savings goals shown before the user creates their own.
+export const mockSavingsGoals: SavingsGoal[] = [
+  { id: 'goal-emergency', name: 'Emergency fund', targetAmount: 5000, currentAmount: 1800, targetDate: '2025-12-31', createdAt: '2025-01-05T09:00:00.000Z' },
+  { id: 'goal-vacation', name: 'Vacation to Portugal', targetAmount: 2200, currentAmount: 950, targetDate: '2025-08-01', createdAt: '2025-02-01T09:00:00.000Z' },
 ]
